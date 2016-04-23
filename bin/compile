@@ -21,5 +21,9 @@ echo "-----> Installing to $BUILD_DIR/.prolog"
 mkdir $BUILD_DIR/.gprolog
 make install
 
-export PATH="$BUILD_DIR/.gprolog/bin:$PATH"
-export PL_PATH="$BUILD_DIR/.gprolog"
+echo "------> Writing profile script"
+mkdir -p $BUILD_DIR/.profile.d
+cat <<EOF >$BUILD_DIR/.profile.d/000_gprolog.sh
+export PATH="\$HOME/.gprolog/gprolog-1.4.4/bin:\$PATH"
+export PL_PATH="\$HOME/.gprolog/gprolog-1.4.4"
+EOF
