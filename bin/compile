@@ -1,0 +1,24 @@
+#!/bin/sh
+
+set -e
+
+BUILDPACK_DIR=$(cd -P -- "$(dirname -- "$0")" && cd .. && pwd -P)
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+TEMP_DIR=`mktemp -d "$BUILDPACK_DIR"/gprolog-XXXX`
+
+echo "-----> Downloading"
+curl -sS http://www.gprolog.org/gprolog-1.4.4.tar.gz -o - | tar -zxf - -C $TEMP_DIR --strip 1
+
+echo "-----> Configuring"
+cd $TEMP_DIR/src
+./configure --prefix=$BUILD_DIR/.gprolog
+make
+
+echo "-----> Installing"
+mkdir $BUILD_DIR/.gprolog
+
+export PATH="$BUILD_DIR/.gprolog/bin:$PATH"
+export PL_PATH="$BUILD_DIR/.gprolog"
