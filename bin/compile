@@ -17,8 +17,9 @@ cd $TEMP_DIR/src
 ./configure --prefix=$BUILD_DIR/.gprolog
 make
 
-echo "-----> Installing"
+echo "-----> Installing to $BUILD_DIR/.prolog"
 mkdir $BUILD_DIR/.gprolog
+make install
 
 export PATH="$BUILD_DIR/.gprolog/bin:$PATH"
 export PL_PATH="$BUILD_DIR/.gprolog"
