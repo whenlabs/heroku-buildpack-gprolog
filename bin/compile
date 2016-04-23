@@ -7,6 +7,8 @@ BUILDPACK_DIR=$(cd -P -- "$(dirname -- "$0")" && cd .. && pwd -P)
 BUILD_DIR=$1
 CACHE_DIR=$2
 
+LP_DIR=`cd $(dirname $0); cd ..; pwd`
+
 TEMP_DIR=`mktemp -d "$BUILDPACK_DIR"/gprolog-XXXX`
 
 echo "-----> Downloading"
@@ -27,3 +29,8 @@ cat <<EOF >$BUILD_DIR/.profile.d/000_gprolog.sh
 export PATH="\$HOME/.gprolog/gprolog-1.4.4/bin:\$PATH"
 export PL_PATH="\$HOME/.gprolog/gprolog-1.4.4"
 EOF
+
+export PATH="$BUILD_DIR/.gprolog/gprolog-1.4.4/bin:$PATH"
+export PL_PATH="$BUILD_DIR/.gprolog/gprolog-1.4.4"
+
+export | grep -E -e ' (PATH|PL_PATH)='  > "$LP_DIR/export"
