@@ -11,12 +11,12 @@ LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
 TEMP_DIR=`mktemp -d "$BUILDPACK_DIR"/gprolog-XXXX`
 
-PROLOG_HOME=https://ftp.gnu.org/gnu/gprolog
-#PROLOG_HOME=http://gprolog.org
-PROLOG_VERSION=1.4.5
+GPROLOG_HOME=https://ftp.gnu.org/gnu/gprolog
+#GPROLOG_HOME=http://gprolog.org
+GPROLOG_VERSION=1.4.5
 
 echo "-----> Downloading"
-curl -sS $PROLOG_HOME/gprolog-$PROLOG_VERSION.tar.gz -o - | tar -zxf - -C $TEMP_DIR --strip 1
+curl -sS $GPROLOG_HOME/gprolog-$GPROLOG_VERSION.tar.gz -o - | tar -zxf - -C $TEMP_DIR --strip 1
 
 echo "-----> Configuring"
 cd $TEMP_DIR/src
@@ -30,11 +30,11 @@ make install
 echo "------> Writing profile script"
 mkdir -p $BUILD_DIR/.profile.d
 cat <<EOF >$BUILD_DIR/.profile.d/000_gprolog.sh
-export PATH="\$HOME/.gprolog/gprolog-\$PROLOG_VERSION/bin:\$PATH"
-export PL_PATH="\$HOME/.gprolog/gprolog-\$PROLOG_VERSION"
+export PATH="\$HOME/.gprolog/gprolog-\$GPROLOG_VERSION/bin:\$PATH"
+export PL_PATH="\$HOME/.gprolog/gprolog-\$GPROLOG_VERSION"
 EOF
 
-export PATH="$BUILD_DIR/.gprolog/gprolog-$PROLOG_VERSION/bin:$PATH"
-export PL_PATH="$BUILD_DIR/.gprolog/gprolog-$PROLOG_VERSION"
+export PATH="$BUILD_DIR/.gprolog/gprolog-$GPROLOG_VERSION/bin:$PATH"
+export PL_PATH="$BUILD_DIR/.gprolog/gprolog-$GPROLOG_VERSION"
 
 export | grep -E -e ' (PATH|PL_PATH)='  > "$LP_DIR/export"
