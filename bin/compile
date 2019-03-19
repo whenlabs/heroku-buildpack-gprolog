@@ -11,7 +11,7 @@ LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
 TEMP_DIR=`mktemp -d "$BUILDPACK_DIR"/gprolog-XXXX`
 
-PROLOG_HOME=https://ftp.gnu.org
+PROLOG_HOME=https://ftp.gnu.org/gnu/gprolog
 #PROLOG_HOME=http://gprolog.org
 PROLOG_VERSION=1.4.5
 
